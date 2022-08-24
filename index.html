@@ -82,6 +82,12 @@
 				$('#addPhoneNumberTo').text('Nhập số điện thoại vào button call');
 			}, 1000);
 
+			$('#phoneNumber').on('keypress',function(e) {
+				if(e.which == 13) {
+					$('#btnAdd').trigger('click');
+				}
+			});
+
 		    $('#btnAdd').click(()=>{
 		    	let phoneNumber = $('#phoneNumber').val();
 		    	if (phoneNumber.length <= 5 || phoneNumber.length > 13) {
