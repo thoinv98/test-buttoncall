@@ -84,7 +84,7 @@
 
 		    $('#btnAdd').click(()=>{
 		    	let phoneNumber = $('#phoneNumber').val();
-		    	if (phoneNumber.length <= 5) {
+		    	if (phoneNumber.length <= 5 || phoneNumber.length > 13) {
 		    		showError();
 		    	} else {
 		    		$('#listPhoneNumber').append(`<option value="${phoneNumber}">${phoneNumber}</option>`);
