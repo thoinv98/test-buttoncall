@@ -7,7 +7,124 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    <div class="container" style="padding: 30px 15px; max-width: 500px; background: aliceblue;">
+    	<div class="row">
+    		<div>
+    			<div class="input-group">
+					<span class="input-group-text">Thêm số vào danh sách</span>
+					<input type="number" id="phoneNumber" class="form-control">
+					<button class="btn btn-outline-secondary" id="btnAdd" type="button">Thêm</button>
+				</div>
+    		</div>
+    		<h3 class="text-center pt-3">hoặc</h3>
+    		<div class="py-3">
+    			<select class="form-select" id="listPhoneNumber">
+					<option selected value="0123456789">0123456789</option>
+					<option value="0365246514">0365246514</option>
+					<option value="098756425">098756425</option>
+				</select>
+    		</div>
+			<div>
+				<button type="button" id="addPhoneNumberTo" class="btn btn-primary w-100" disabled>Xin chờ...</button>
+			</div>
+    	</div>
+
+		<div class="toast-container position-fixed top-0 p-3">
+			<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+				<div class="toast-header">
+				<strong class="me-auto">Lỗi</strong>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+				</div>
+				<div class="toast-body">
+					Cần nhập số điện thoại hợp lệ!
+				</div>
+			</div>
+			<div id="noti" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+				<div class="toast-header">
+				<strong class="me-auto">Thông báo</strong>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+				</div>
+				<div class="toast-body">
+					Thêm thành công!
+				</div>
+			</div>
+			<div id="noti2" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+				<div class="toast-header">
+				<strong class="me-auto">Thông báo</strong>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+				</div>
+				<div class="toast-body">
+					Nhập số điện thoại thành công!
+				</div>
+			</div>
+			<div id="err2" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+				<div class="toast-header">
+				<strong class="me-auto">Lỗi!</strong>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+				</div>
+				<div class="toast-body">
+					Có lỗi xảy ra thử lại sau!
+				</div>
+			</div>
+		</div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    	$( document ).ready(function() {
+			const toastError = document.getElementById('liveToast');
+			const toastNoti = document.getElementById('noti');
+			const toastNoti2 = document.getElementById('noti2');
+			const toastErr2 = document.getElementById('err2');
+
+			setTimeout(()=>{
+				$('#addPhoneNumberTo').removeAttr('disabled');
+				$('#addPhoneNumberTo').text('Nhập số điện thoại vào button call');
+			}, 1000);
+
+		    $('#btnAdd').click(()=>{
+		    	let phoneNumber = $('#phoneNumber').val();
+		    	if (phoneNumber.length <= 0) {
+		    		showError();
+		    	} else {
+		    		$('#listPhoneNumber').append(`<option value="${phoneNumber}">${phoneNumber}</option>`);
+					showNoti();
+		    	}
+		    })
+
+			$('#addPhoneNumberTo').click(()=>{
+				let phoneNumber = $('#listPhoneNumber').val();
+				if ($('#stringee-button-call-frame') && $('#stringee-button-call-frame').contents() && $('#stringee-button-call-frame').contents().find('input#inputPhone')) {
+
+					var framejQuery = $('#stringee-button-call-frame').get(0).contentWindow.$;
+					framejQuery('input#inputPhone').val(phoneNumber).trigger('change');
+					showNoti2();
+				} else {
+					showError2();
+				}
+			})
+
+		    function showError(){
+				const toast = new bootstrap.Toast(toastError);
+				toast.show();
+			}
+
+			function showError2(){
+				const toast = new bootstrap.Toast(toastErr2);
+				toast.show();
+			}
+
+			function showNoti(){
+				const toast = new bootstrap.Toast(toastNoti);
+				toast.show();
+			}
+
+			function showNoti2(){
+				const toast = new bootstrap.Toast(toastNoti2);
+				toast.show();
+			}
+		});
+    </script>
+	<script>!function(){var t=window,e=document;function a(){var t=e.createElement("script");t.id="stringee_script_button_call",t.type="text/javascript",t.src="https://test217.stringee.com/button-call/lastest/StringeeButtonCall-latest.js?key=bTFzdkZRRENZUXk4cVQ5cVFxVmpHMVBDWk55amE4UVZWRzRoU2h6QXNvN1Q3MXgvdWlwL0hMTGdjUjRqR05qRw==&version=1.0";var a=e.getElementsByTagName("script")[0];a.parentNode.insertBefore(t,a)}t.attachEvent?t.attachEvent("onload",a):t.addEventListener("DOMContentLoaded",a,!1)}();</script>
   </body>
 </html>
